@@ -1,0 +1,26 @@
+Title: Zymp3
+Description: Converts youtube videos to mp3
+Author: Silvernode
+Contact: silvernode@gmail.com
+Platform: Linux
+
+
+
+Dependencies
+-------------
+
+* youtube-dl
+* zenity
+* vlc
+
+
+Installation
+-------------
+
+1. Open a terminal window
+2. Navigate to the directory zymp3 is located
+3. you@machine:~$ chmod +x zymp3
+4. ./zymp3 
+
+
+
