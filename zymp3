@@ -1,9 +1,22 @@
 #!/bin/bash
+##############################################
+# Title: Zymp3 v0.1
+# Description: Convert youtube video to mp3
+# Author: Justin Moore
+# Contact: silvernode@gmail.com
+# github: https://github.com/silvernode/zymp3
+##############################################
 
+
+#I wrote this in 2011 and realize now I could have done this alot better
+
+
+
+#set music directory path
 MUSICDIR="/home/$USER/Music"
 
 
-
+#convert youtube videos to mp3 with zenity progess bar
 backend()
 {
 t=~/.youtube-dl-$RANDOM-$RANDOM.flv 
@@ -16,16 +29,15 @@ rm $t
 }
 
 
-
+#first zenity gui window (paste youtube link)
 gui()
 {
 x=$(zenity --title="Zymp3 0.1-1" --entry  --text "Paste youtube link here: ")
 
 
-
-
- 
 if [[ $? == 0 ]] ; then
+
+
 gui2
 else
    exit 0;
@@ -36,6 +48,8 @@ fi
 
 
 }
+
+#second gui window to name your mp3 file
 
 gui2()
 {
@@ -52,7 +66,7 @@ fi
 
 
 
-
+#notify the user that the mp3 file has been moved to their music folder
 open()
 {
 
@@ -71,7 +85,7 @@ fi
 }
 
 
-
+#move the mp3 file to the users music directory
 move()
 {
 
@@ -80,6 +94,7 @@ mv "$y.mp3" /home/$USER/Music
 
 }
 
+#call the backend function so we can use it
 dconvert()
 {
 backend "$x" "$y.mp3"
@@ -98,6 +113,7 @@ fi
 open
 }
 
+#call the main gui
 gui
 
 
