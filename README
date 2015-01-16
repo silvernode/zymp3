@@ -11,8 +11,10 @@ Dependencies
 -------------
 
 * youtube-dl
-* zenity
-* vlc
+* zenity or yad
+* xdg-utils
+* libnotify
+* ffmpeg or avconvert
 
 
 Installation
@@ -20,8 +22,10 @@ Installation
 
 1. Open a terminal window
 2. Navigate to the directory zymp3 is located
-3. you@machine:~$ chmod +x zymp3
-4. ./zymp3 
+3. you@machine:~$ cd zymp3/src
+4. ./zymp3
+
+TODO: standalone installer 
 
 
 
