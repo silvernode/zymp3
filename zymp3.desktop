@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Zymp3
-Comment=Convert youtube videos to mp3
-Exec=zymp3
-Icon=zymp3.png
-Terminal=0
-Type=Application
-Encoding=UTF-8
-Categories=AudioVideo;Application;
