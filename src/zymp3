@@ -37,8 +37,8 @@ if [ -f ../lib/logic.lib ];then
   source ../lib/logic.lib
 
 else
-  echo -e "\e[1;31mERROR: No libraries file in found in ../libs \e[0m"
-  zenity --error --text "No libraries file in found in ../libs"
+  echo -e "\e[1;31mERROR: No libraries file found in ../libs \e[0m"
+  zenity --error --text "No libraries file found in ../libs"
   exit 0;
 fi
 
