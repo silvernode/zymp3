@@ -12,27 +12,34 @@
 
 
 
-#set music directory path
-MUSICDIR="/home/$USER/Music"
-
+#inport config
+#source config.sh
+MUSICDIR=/home/$USER/Music/
 
 #convert youtube videos to mp3 with zenity progess bar
 backend()
 {
-t=~/.youtube-dl-$RANDOM-$RANDOM.flv 
+t=~/.youtube-dl-$RANDOM-$RANDOM.flv
 youtube-dl --output=$t --format=18 "$1" | zenity --progress --pulsate --title="Downloading..." --text="Downloading video, please wait.." --auto-close
-ffmpeg -i $t -acodec libmp3lame -ac 2 -ab 128k -vn -y "$2" | zenity --progress --pulsate --title="Converting..." --text="Converting video to mp3.." --auto-close
-rm $t
 
+if [ ! -f $t ];then
+  zenity --error --text "The mp3 file was does not exist. Either the download failed or the video was not converted to mp3 properly"
+  exit 0;
 
+elif [ -f $t ];then
+  ffmpeg -i $t -acodec libmp3lame -ac 2 -ab 128k -vn -y "$2" | zenity --progress --pulsate --title="Converting..." --text="Converting video to mp3.." --auto-close
+  rm $t
 
+  echo $y
+
+fi
 }
 
 
 #first zenity gui window (paste youtube link)
 gui()
 {
-x=$(zenity --title="Zymp3 0.1-1" --entry  --text "Paste youtube link here: ")
+x=$(zenity --title="Zymp3 0.1-1" --height="64" --width="512" --entry  --text "Paste youtube link here: ")
 
 
 if [[ $? == 0 ]] ; then
@@ -53,12 +60,12 @@ fi
 
 gui2()
 {
-y=$(zenity --title="Filename" --entry --text "Name your file: ")
+y=$(zenity --title="Filename" --height="64" --width="326" --entry --text "Name your file: ")
 
 if [[ $? == 0 ]] ; then
-dconvert
+  dconvert
 else
-   exit 0;
+  exit 0;
 fi
 
 }
@@ -76,7 +83,7 @@ zenity --question --title="Hey!" --text="I moved $y.mp3 to $MUSICDIR, do you wan
 
 
 if [[ $? == 0 ]] ; then
-vlc "/home/$USER/Music/$y.mp3"
+xdg-open "${MUSICDIR}${y}.mp3"
 else
    exit 0;
 fi
@@ -88,9 +95,26 @@ fi
 #move the mp3 file to the users music directory
 move()
 {
+if [ -d ${MUSICDIR} ];then
+  echo $y
+  mv -v "$y.mp3" ${MUSICDIR}
+elif [ ! -d ${MUSICDIR} ];then
+  mkdir ${MUSICDIR}
+  mv -v "$y.mp3" ${MUSICDIR}
+  
+fi
 
-mkdir /home/$USER/Music
-mv "$y.mp3" /home/$USER/Music
+
+}
+
+checkFile()
+{
+
+if [ -f "${MUSICDIR}$y.mp3" ];then
+  notify-send "$y.mp3 was saved in ${MUSICDIR}"
+elif [ ! -f "${MUSICDIR}$y.mp3" ];then
+  zenity --error --text "The mp3 file was does not exist. Either the download failed or the video was not converted to mp3 properly"
+fi
 
 }
 
@@ -99,14 +123,9 @@ dconvert()
 {
 backend "$x" "$y.mp3"
 
-
 move
 
-if [ -f "/home/$USER/Music/$y.mp3" ]
-then notify-send "$y.mp3 was saved in $MUSICDIR}"
-else
-zenity --error --text "Oh no! Something fucked up! fuck.."
-fi
+checkFile
 
 
 
@@ -114,8 +133,10 @@ open
 }
 
 #call the main gui
-gui
 
+while true;do
+  gui
+done
 
 
  
