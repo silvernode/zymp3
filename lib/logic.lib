@@ -1,9 +1,18 @@
 #!/bin/bash
 
 
-SET_GUI_BIN="zenity"
-SET_CONV_TOOL="ffmpeg"
 
+if [ ! -f /usr/bin/yad ];then
+  SET_GUI_BIN="zenity"
+else
+  SET_GUI_BIN="yad"
+fi
+
+if [ ! -f /usr/bin/ffmpeg ];then
+  SET_CONV_TOOL="avconv"
+else
+  SET_CONV_TOOL="ffmpeg"
+fi
 #convert youtube videos to mp3 with zenity progess bar
 backend()
 {
