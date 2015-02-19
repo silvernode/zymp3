@@ -22,19 +22,19 @@ if [ -f ~/.config/Zymp3/zymp3.conf ];then
   source ~/.config/Zymp3/zymp3.conf
 
 
-elif [ -f ../config/zymp3.conf ];then
-  source ../config/zymp3.conf
+elif [ -f config/zymp3.conf ];then
+  source config/zymp3.conf
 
 else
-  echo -e "\e[1;31mERROR: No config file in $HOME/.config/Zymp3/ or ../config/ \e[0m"
-  zenity --error --text "No config file in $HOME/.config/Zymp3/ or ../config"
+  echo -e "\e[1;31mERROR: No config file in $HOME/.config/Zymp3/ or /config/ \e[0m"
+  zenity --error --text "No config file in $HOME/.config/Zymp3/ or /config"
   exit 0;
 fi
 }
 
 chk_libs(){
-if [ -f ../lib/logic.lib ];then
-  source ../lib/logic.lib
+if [ -f lib/logic.lib ];then
+  source lib/logic.lib
 
 else
   echo -e "\e[1;31mERROR: No libraries file found in ../libs \e[0m"
