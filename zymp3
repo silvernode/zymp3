@@ -1,10 +1,10 @@
 #!/bin/bash
 ##############################################
-# Title: Zymp3 v0.1-5
+# Title: Zymp3 v0.1-6
 # Description: Convert youtube video to mp3
 # Author: Justin Moore
 # Created: Oct 12, 2011
-# Updated: Jan 16, 2015
+# Updated: Feb 25, 2015
 # Contact: mollusk@homebutter.com
 # github: https://github.com/silvernode/zymp3
 ##############################################
@@ -14,31 +14,28 @@
 
 
 
-
-
 #check for config file in two locations
 chk_conf(){
-if [ -f ~/.config/Zymp3/zymp3.conf ];then
-  source ~/.config/Zymp3/zymp3.conf
-
-
-elif [ -f config/zymp3.conf ];then
+if [ -f config/zymp3.conf ];then
   source config/zymp3.conf
 
+
+
 else
-  echo -e "\e[1;31mERROR: No config file in $HOME/.config/Zymp3/ or /config/ \e[0m"
-  zenity --error --text "No config file in $HOME/.config/Zymp3/ or /config"
+  echo -e "\e[1;31mERROR: No config file found, report bugs to: https://github.com/silvernode/zymp3/issues \e[0m"
+  zenity --error --text "No config file found, report bugs to: https://github.com/silvernode/zymp3/issues"
   exit 0;
 fi
 }
 
 chk_libs(){
 if [ -f lib/logic.lib ];then
-  source lib/logic.lib
+  source lib/logic.lib 
+
 
 else
-  echo -e "\e[1;31mERROR: No libraries file found in ../libs \e[0m"
-  zenity --error --text "No libraries file found in ../libs"
+  echo -e "\e[1;31mERROR: logic.lib not found, report bugs to https://github.com/silvernode/zymp3/issues \e[0m"
+  zenity --error --text "logic.lib not found, report bugs to: https://github.com/silvernode/zymp3/issues"
   exit 0;
 fi
 

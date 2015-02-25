@@ -1,11 +1,13 @@
 #!/bin/bash
 
-
+source config/zymp3.conf
 
 if [ ! -f /usr/bin/yad ];then
   SET_GUI_BIN="zenity"
-else
+elif [ ! -f /usr/bin/zenity ];then
   SET_GUI_BIN="yad"
+else
+  SET_GUI_BIN="${SET_GUI_BIN}"
 fi
 
 if [ ! -f /usr/bin/ffmpeg ];then
@@ -37,7 +39,7 @@ fi
 #first zenity gui window (paste youtube link)
 gui()
 {
-  VIDURL=$(${SET_GUI_BIN} --title="Zymp3 0.1-5" --height=${URL_BOX_HEIGHT} --width=${URL_BOX_WIDTH} --entry  --text "Paste youtube link here: ")
+  VIDURL=$(${SET_GUI_BIN} --title="Zymp3 0.1-6" --height=${URL_BOX_HEIGHT} --width=${URL_BOX_WIDTH} --entry  --text "Paste youtube link here: ")
 
   if [[ $? == 0 ]] ; then
   gui2
