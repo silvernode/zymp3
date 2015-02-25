@@ -64,3 +64,5 @@ To uninstall run the uninstall script located in the repo or the installation di
 ```
 ./uninstall.sh
 ```
+
+Please submit any issues you find, thanks
