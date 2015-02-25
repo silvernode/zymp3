@@ -8,7 +8,8 @@
 
 
 * youtube-dl
-* zenity or yad
+* zenity
+* yad (optional)
 * xdg-utils
 * libnotify
 * ffmpeg or avconvert
