@@ -39,7 +39,24 @@ Then run the installer script:
 ```
 ./install.sh
 ```
-  
+
+###Updating  
+
+To update to a new version, first change to the repo directory:  
+```
+cd zymp3
+```
+then run the pull command:
+```
+git pull
+```
+This will merge any changes that have been made to files and put you up to date.  
+Alternatively you can run the update script (which just runs git pull)  
+I added this in case you have a bad memory.  
+```
+./update.sh
+```
+
 ###Uninstall  
 
 To uninstall run the uninstall script located in the repo or the installation directory: 
