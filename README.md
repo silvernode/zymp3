@@ -1,5 +1,5 @@
 
-##Zymp3  
+##Zymp3  0.1-6
 ####A frontend for youtube-dl and ffmpeg/avconv
 
 
