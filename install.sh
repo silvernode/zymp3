@@ -153,9 +153,9 @@ fi
 #if a certain number is not reached, the check fails
 #if the check succeeds, files are installed
 #TODO add checks to verify installation 
-ALLSTATUS=$(expr ${YSTATUS} + ${FSTATUS} + ${ZSTATUS} + ${YASTATUS} + ${XSTATUS} + ${NSTATUS} + ${ISTATUS})
+ALLSTATUS=$(expr ${YSTATUS} + ${FSTATUS} + ${ZSTATUS} + ${XSTATUS} + ${NSTATUS} + ${ISTATUS})
 
-if [ ${ALLSTATUS} != 7 ];then
+if [ ${ALLSTATUS} != 6 ];then
   echo "$0 : ERROR : not all dependencies installed!"
   exit 0;
 else
