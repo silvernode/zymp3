@@ -29,7 +29,7 @@ fi
 COUNT=$(expr ${INSTALLDIR} + ${BINFILE} + ${DESKTOPFILE})
 
 if [ "${COUNT}" = "3" ];then
-  echo "Looks like zymp3 is still installed"
+  echo -e "\e[93m Looks like zymp3 is still installed \033[0m"
   echo -n "Would you like to remove all files?[y/n]: "
   read CHOICE
   
@@ -41,7 +41,7 @@ if [ "${COUNT}" = "3" ];then
     COUNT=$(expr ${INSTALLDIR} + ${BINFILE} + ${DESKTOPFILE})
     
     if [ "${COUNT}" = "0" ];then
-      echo "Zymp3 has been successfully is uninstalled"
+      echo -e "\e[92m Zymp3 has been successfully is uninstalled \033[0m"
     else
       echo "$COUNT"
       echo "It seems the uninstall did not go smoothly."

@@ -76,66 +76,66 @@ echo "Checking dependencies...";echo
 checkYoutubedl
 if [ $? -eq "1" ];then
   YSTATUS=0
-  echo "is youtube-dl installed?: no"
+  echo -e "is youtube-dl installed?: \e[31m no \033[0m"
 else
   YSTATUS=1
-  echo "is youtube-dl installed?: yes"
+  echo -e "is youtube-dl installed?: \e[32m yes \033[0m"
 fi
 
 checkFfmpeg
 if [ $? -eq "1" ];then
   FSTATUS=0
-  echo "is ffmpeg installed?: no"
+  echo -e "is ffmpeg installed?: \e[31m no \033[0m"
 else
   FSTATUS=1
-  echo "is ffmpeg installed?: yes"
+  echo -e "is ffmpeg installed?: \e[32m yes \033[0m"
 fi
 
 checkZenity
 if [ $? -eq "1" ];then
   ZSTATUS=0
-  echo "is zenity installed?: no"
+  echo -e "is zenity installed?: \e[31m no \033[0m"
 else
   ZSTATUS=1
-  echo "is zenity installed?: yes"
+  echo -e "is zenity installed?: \e[32m yes \033[0m"
 fi
   
 checkYad
 if [ $? -eq "1" ];then
   YASTATUS=0
-  echo "is yad install?: no"
+  echo -e "is yad install?: \e[31m no \033[0m"
 else
   YASTATUS=1
-  echo "is yad installed?: yes"
+  echo -e "is yad installed?: \e[32m yes \033[0m (Optional)"
 fi
 
 checkXdg
 if [ $? -eq "1" ];then
   XSTATUS=0
-  echo "is xdg-utils install?: no"
+  echo -e "is xdg-utils install?: \e[31m no \033[0m"
 else
   XSTATUS=1
-  echo "is xdg-utils installed?: yes"
+  echo -e "is xdg-utils installed?: \e[32m yes \033[0m"
 fi
 
 
 checkNotify
 if [ $? -eq "1" ];then
   NSTATUS=0
-  echo "is libnotify install?: no"
+  echo -e "is libnotify install?: \e[31m no \033[0m"
 else
   NSTATUS=1
-  echo "is libnotify installed?: yes"
+  echo -e "is libnotify installed?: \e[32m yes \033[0m"
 fi
 
 
 checkInstall
 if [ $? -eq "1" ];then
   ISTATUS=0
-  echo "does ${INSTALLPATH} exist?: no"
+  echo -e "does ${INSTALLPATH} exist?: \e[31m no \033[0m"
 else
   ISTATUS=1
-  echo "does ${INSTALLPATH} exist?: yes"
+  echo -e "does ${INSTALLPATH} exist?: \e[32m yes \033[0m"
 fi
 
 if [ ${ISTATUS} = 0 ];then
@@ -151,15 +151,15 @@ fi
 
 #add all exit status variables and check the sum
 #if a certain number is not reached, the check fails
-#if the check succeeds, files are installed
-#TODO add checks to verify installation 
-ALLSTATUS=$(expr ${YSTATUS} + ${FSTATUS} + ${ZSTATUS} + ${XSTATUS} + ${NSTATUS} + ${ISTATUS})
+#if the check succeeds, files are installed 
+ALLSTATUS=$(expr ${YSTATUS} + ${FSTATUS} + ${ZSTATUS} + ${XSTATUS} + ${ISTATUS})
 
-if [ ${ALLSTATUS} != 6 ];then
+if [ ${ALLSTATUS} != 5 ];then
   echo "$0 : ERROR : not all dependencies installed!"
   exit 0;
 else
-  echo "Everything looks good!"
+  echo
+  echo -e "\e[92mEverything looks good!\033[0m"
   echo
   echo -n "Continue installation?[y/n]: "
   read confirm
@@ -181,7 +181,8 @@ else
       echo "Zymp3 not installed successfully"
       echo "Please file a bug report at: https://github.com/silvernode/zymp3/issues"
     else
-      echo "Zymp3 successfully installed to: ${INSTALLPATH}"
+      echo "====================================================="
+      echo -e "\e[92mZymp3 successfully installed to: ${INSTALLPATH}\033[0m"
       echo "An icon has been created in your application menu under the multimedia category."
     fi
   else
