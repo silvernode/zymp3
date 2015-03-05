@@ -39,7 +39,7 @@ fi
 #first zenity gui window (paste youtube link)
 gui()
 {
-  VIDURL=$(${SET_GUI_BIN} --title="Zymp3 0.1-7" --height=${URL_BOX_HEIGHT} --width=${URL_BOX_WIDTH} --entry  --text "Paste youtube link here: ")
+  VIDURL=$(${SET_GUI_BIN} --title="Zymp3 0.1.7" --height=${URL_BOX_HEIGHT} --width=${URL_BOX_WIDTH} --entry  --text "Paste youtube link here: ")
 
 
   if  [[ $? == 0 ]];then
