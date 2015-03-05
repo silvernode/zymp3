@@ -11,7 +11,7 @@
 * zenity
 * yad (optional)
 * xdg-utils
-* libnotify
+* libnotify (optional)
 * ffmpeg or avconvert
 
 
