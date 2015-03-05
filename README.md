@@ -17,6 +17,17 @@
 
 ###Install  
 
+####Stable Release  
+Copy and paste the following commands into your terminal all at once.
+```
+wget https://github.com/silvernode/zymp3/archive/v0.1.7.tar.gz && \
+tar xvzf v0.1.7.tar.gz && \
+cd zymp3-0.1.7 && \
+sudo ./install.sh
+```
+Once completed, an icon will be added to your applications menu (if you have one)  
+This command block will be updated ever new release
+####git
 Install git from your distribution repository  
 for Ubuntu run:  
 ```
