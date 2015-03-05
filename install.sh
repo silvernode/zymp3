@@ -76,34 +76,34 @@ echo "Checking dependencies...";echo
 checkYoutubedl
 if [ $? -eq "1" ];then
   YSTATUS=0
-  echo -e "is youtube-dl installed?: \e[31m no \033[0m"
+  echo -e "is youtube-dl installed?: \e[31m no \033[0m (Required)"
 else
   YSTATUS=1
-  echo -e "is youtube-dl installed?: \e[32m yes \033[0m"
+  echo -e "is youtube-dl installed?: \e[32m yes \033[0m (Required)"
 fi
 
 checkFfmpeg
 if [ $? -eq "1" ];then
   FSTATUS=0
-  echo -e "is ffmpeg installed?: \e[31m no \033[0m"
+  echo -e "is ffmpeg installed?: \e[31m no \033[0m (Required)"
 else
   FSTATUS=1
-  echo -e "is ffmpeg installed?: \e[32m yes \033[0m"
+  echo -e "is ffmpeg installed?: \e[32m yes \033[0m (Required)"
 fi
 
 checkZenity
 if [ $? -eq "1" ];then
   ZSTATUS=0
-  echo -e "is zenity installed?: \e[31m no \033[0m"
+  echo -e "is zenity installed?: \e[31m no \033[0m (Required)"
 else
   ZSTATUS=1
-  echo -e "is zenity installed?: \e[32m yes \033[0m"
+  echo -e "is zenity installed?: \e[32m yes \033[0m (Required)"
 fi
   
 checkYad
 if [ $? -eq "1" ];then
   YASTATUS=0
-  echo -e "is yad install?: \e[31m no \033[0m"
+  echo -e "is yad installed?: \e[31m no \033[0m (Optional)"
 else
   YASTATUS=1
   echo -e "is yad installed?: \e[32m yes \033[0m (Optional)"
@@ -112,20 +112,20 @@ fi
 checkXdg
 if [ $? -eq "1" ];then
   XSTATUS=0
-  echo -e "is xdg-utils install?: \e[31m no \033[0m"
+  echo -e "is xdg-utils installed?: \e[31m no \033[0m (Required)"
 else
   XSTATUS=1
-  echo -e "is xdg-utils installed?: \e[32m yes \033[0m"
+  echo -e "is xdg-utils installed?: \e[32m yes \033[0m (Required)"
 fi
 
 
 checkNotify
 if [ $? -eq "1" ];then
   NSTATUS=0
-  echo -e "is libnotify install?: \e[31m no \033[0m"
+  echo -e "is libnotify installed?: \e[31m no \033[0m (Optional)"
 else
   NSTATUS=1
-  echo -e "is libnotify installed?: \e[32m yes \033[0m"
+  echo -e "is libnotify installed?: \e[32m yes \033[0m (Optional)"
 fi
 
 
