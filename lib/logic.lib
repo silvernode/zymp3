@@ -43,7 +43,7 @@ gui()
 
 
   if  [[ $? == 0 ]];then
-    if [[ ${VIDURL} == *"https://www.youtube.com"* ]];then
+    if [[ ${VIDURL} == *"https://www.youtube.com/watch?v="* ]];then
       gui2
     
     else
