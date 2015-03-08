@@ -29,8 +29,8 @@ fi
 }
 
 chk_libs(){
-if [ -f lib/logic.lib ];then
-  source lib/logic.lib 
+if [ -f lib/logic.sh ];then
+  source lib/logic.sh
 
 
 else
@@ -46,11 +46,11 @@ fi
 main(){
   while true;do
     chk_conf
-    chk_libs  
+    chk_libs
     gui
   done
 
 }
 
 main
- 
+
