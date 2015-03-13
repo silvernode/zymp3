@@ -26,7 +26,7 @@ if [ ! -f $VIDEOFILE ];then
   exit 0;
 
 elif [ -f $VIDEOFILE ];then
-  ${SET_CONV_TOOL} -i $VIDEOFILE -acodec libmp3lame -ac 2 -ab 128k -vn -y "$2" | ${SET_GUI_BIN} --progress --pulsate --title="Converting..." --text="Converting video to mp3.." --auto-close
+  ${SET_CONV_TOOL} -i $VIDEOFILE -acodec libmp3lame -ac 2 -ab 128k -vn -y "${CONVERTED}/$2" | ${SET_GUI_BIN} --progress --pulsate --title="Converting..." --text="Converting video to mp3.." --auto-close
   rm ${VIDEOFILE}
 
 else
@@ -96,10 +96,10 @@ open()
 move()
 {
   if [ -d ${MUSICDIR} ];then
-    mv -v "${AUDIOFILENAME}.mp3" ${MUSICDIR}
+    mv -v "${CONVERTED}/${AUDIOFILENAME}.mp3" ${MUSICDIR}
   elif [ ! -d ${MUSICDIR} ];then
     mkdir ${MUSICDIR}
-    mv -v "${AUDIOFILENAME}.mp3" ${MUSICDIR}
+    mv -v "${CONVERTED}/${AUDIOFILENAME}.mp3" ${MUSICDIR}
   
   fi
 
