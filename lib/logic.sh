@@ -19,19 +19,25 @@ fi
 backend()
 {
 
-youtube-dl --output=${VIDEOFILE} --format=18 "$1" | ${SET_GUI_BIN} --progress --pulsate --title="Downloading..." --text="Downloading video, please wait.." --auto-close
+  youtube-dl --output=${VIDEOFILE} --format=18 "$1" | ${SET_GUI_BIN} --progress \
+  --pulsate --title="Downloading..." \
+  --text="Downloading video, please wait.." --auto-close
 
-if [ ! -f $VIDEOFILE ];then
-  ${SET_GUI_BIN} --error --text "Can't convert video to mp3 because it does not exist, it probably failed to download."
-  exit 0;
+  if [ ! -f $VIDEOFILE ];then
+    ${SET_GUI_BIN} --error \
+    --text "Can't convert video to mp3 because it does not exist, it probably failed to download."
+    exit 0;
 
-elif [ -f $VIDEOFILE ];then
-  ${SET_CONV_TOOL} -i $VIDEOFILE -acodec libmp3lame -ac 2 -ab 128k -vn -y "${CONVERTED}/$2" | ${SET_GUI_BIN} --progress --pulsate --title="Converting..." --text="Converting video to mp3.." --auto-close
-  rm ${VIDEOFILE}
+  elif [ -f $VIDEOFILE ];then
+    ${SET_CONV_TOOL} -i $VIDEOFILE -acodec libmp3lame -ac 2 -ab 128k -vn -y "${CONVERTED}/$2" | ${SET_GUI_BIN} \
+    --progress --pulsate --title="Converting..." \
+    --text="Converting video to mp3.." --auto-close
+    rm ${VIDEOFILE}
 
 else
   echo -e "\e[1;31mERROR: It seems the video file successfully downloaded, however it was not converted to mp3 \e[0m"
-  ${SET_GUI_BIN} --error --text "It seems the video file successfully downloaded, however it was not converted to mp3"
+  ${SET_GUI_BIN} --error \
+  --text "It seems the video file successfully downloaded, however it was not converted to mp3"
 fi
 }
 
@@ -39,7 +45,10 @@ fi
 #first zenity gui window (paste youtube link)
 gui()
 {
-  VIDURL=$(${SET_GUI_BIN} --title="Zymp3 0.1.7" --height=${URL_BOX_HEIGHT} --width=${URL_BOX_WIDTH} --entry  --text "Paste youtube link here: ")
+  VIDURL=$(${SET_GUI_BIN} --title="Zymp3 0.1.7" \
+  --height=${URL_BOX_HEIGHT} \
+  --width=${URL_BOX_WIDTH} --entry  \
+  --text "Paste youtube link here: ")
 
 
   if  [[ $? == 0 ]];then
@@ -64,7 +73,10 @@ gui()
 
 gui2()
 {
-  AUDIOFILENAME=$(${SET_GUI_BIN} --title="Filename" --height=${FILENAME_BOX_HEIGHT} --width=${FILENAME_BOX_WIDTH} --entry --text "Name your file: ")
+  AUDIOFILENAME=$(${SET_GUI_BIN} --title="Filename" \
+  --height=${FILENAME_BOX_HEIGHT} \
+  --width=${FILENAME_BOX_WIDTH} \
+  --entry --text "Name your file: ")
 
   if [[ $? == 0 ]] ; then
     dconvert
@@ -112,10 +124,13 @@ checkFile()
   #check if mp3 file exists
   if [ -f "${MUSICDIR}${AUDIOFILENAME}.mp3" ];then
     notify-send "${AUDIOFILENAME}.mp3 was saved in ${MUSICDIR}"
-    ${SET_GUI_BIN} --question --title="Hey!" --text="I moved $AUDIOFILENAME.mp3 to $MUSICDIR, do you want to play it now?"
+    ${SET_GUI_BIN} --question \
+    --title="Hey!" \
+    --text="I moved $AUDIOFILENAME.mp3 to $MUSICDIR, do you want to play it now?"
 
   elif [ ! -f "${MUSICDIR}${AUDIOFILENAME}.mp3" ];then
-    ${SET_GUI_BIN} --error --text "The mp3 file was does not exist. Either the download failed or the video was not converted to mp3 properly"
+    ${SET_GUI_BIN} --error \
+  --text "The mp3 file was does not exist. Either the download failed or the video was not converted to mp3 properly"
   fi
 
 }
