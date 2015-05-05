@@ -14,7 +14,7 @@
 
 
 
-#check for config file in two locations
+#check for config file
 chk_conf(){
 if [ -f config/zymp3.conf ];then
   source config/zymp3.conf
