@@ -22,23 +22,52 @@ backend()
   youtube-dl --output=${VIDEOFILE} --format=18 "$1" | ${SET_GUI_BIN} --progress \
   --pulsate --title="Downloading..." \
   --text="Downloading video, please wait.." --auto-close
-
-  if [ ! -f $VIDEOFILE ];then
-    ${SET_GUI_BIN} --error \
-    --text "Can't convert video to mp3 because it does not exist, it probably failed to download."
+  if [[ $? == 1 ]];then
     exit 0;
+  fi
+  if [ "${USE_FILE_BROWSER}" = "no" ];then
+    if [ ! -f $VIDEOFILE ];then
+      ${SET_GUI_BIN} --error \
+      --text "Can't convert video because it does not exist, it probably failed to download."
+      exit 0;
 
-  elif [ -f $VIDEOFILE ];then
-    ${SET_CONV_TOOL} -i $VIDEOFILE -acodec libmp3lame -ac 2 -ab 128k -vn -y "${CONVERTED}/$2" | ${SET_GUI_BIN} \
-    --progress --pulsate --title="Converting..." \
-    --text="Converting video to mp3.." --auto-close
-    rm ${VIDEOFILE}
+    elif [ -f $VIDEOFILE ];then
+      ${SET_CONV_TOOL} -i $VIDEOFILE -acodec ${CODEC} -ac 2 -ab ${BITRATE}k -vn -y "${CONVERTED}/$2" | ${SET_GUI_BIN} \
+      --progress --pulsate --title="Converting..." \
+      --text="Converting video.." --auto-close
+      if [[ $? != 0 ]];then
+        exit 0;
+      fi
+      rm ${VIDEOFILE}
 
-else
-  echo -e "\e[1;31mERROR: It seems the video file successfully downloaded, however it was not converted to mp3 \e[0m"
-  ${SET_GUI_BIN} --error \
-  --text "It seems the video file successfully downloaded, however it was not converted to mp3"
-fi
+    else
+      echo -e "\e[1;31mERROR: It seems the video file successfully downloaded, however it was not converted \e[0m"
+      ${SET_GUI_BIN} --error \
+      --text "It seems the video file successfully downloaded, however it was not converted."
+    fi
+
+  else
+    if [ ! -f $VIDEOFILE ];then
+      ${SET_GUI_BIN} --error \
+      --text "Can't convert video because it does not exist, it probably failed to download."
+      exit 0;
+
+    elif [ -f $VIDEOFILE ];then
+      ${SET_CONV_TOOL} -i $VIDEOFILE -acodec ${CODEC} -ac 2 -ab ${BITRATE}k -vn -y "$2" | ${SET_GUI_BIN} \
+      --progress --pulsate --title="Converting..." \
+      --text="Converting video.." --auto-close
+      if [[ $? != 0 ]];then
+        exit 0;
+      fi
+      rm ${VIDEOFILE}
+
+    else
+      echo -e "\e[1;31mERROR: It seems the video file successfully downloaded, however it was not converted \e[0m"
+      ${SET_GUI_BIN} --error \
+      --text "It seems the video file successfully downloaded, however it was not converted"
+    fi
+  fi
+  
 }
 
 
@@ -73,15 +102,30 @@ gui()
 
 gui2()
 {
-  AUDIOFILENAME=$(${SET_GUI_BIN} --title="Filename" \
-  --height=${FILENAME_BOX_HEIGHT} \
-  --width=${FILENAME_BOX_WIDTH} \
-  --entry --text "Name your file: ")
 
-  if [[ $? == 0 ]] ; then
-    dconvert
+  if [ "${USE_FILE_BROWSER}" = "no" ];then
+    AUDIOFILENAME=$(${SET_GUI_BIN} --title="Filename" \
+    --height=${FILENAME_BOX_HEIGHT} \
+    --width=${FILENAME_BOX_WIDTH} \
+    --entry --text "Name your file: ")
+
+    if [[ $? == 0 ]];then
+      dconvert
+    else
+      exit 0;
+    fi
+
   else
-    exit 0;
+    FILEBROWSER=$(zenity --file-selection --directory \
+    --title= "Where to save mp3 file? " \
+    --filename=/home/$USER/Music/ \
+    --file-filter='MP3 files (mp3) | *.mp3','OGG files (ogg) | *.ogg', 'FLAC (flac) | *.flac' \
+    --save --confirm-overwrite)
+    if [[ $? == 0 ]];then
+      dconvert
+    else
+      exit 0;
+    fi
   fi
 
 }
@@ -93,11 +137,20 @@ gui2()
 open()
 {
 
+  if [ "${USE_FILE_BROWSER}" = "no" ];then
+    if [[ $? == 0 ]];then
+    xdg-open "${MUSICDIR}${AUDIOFILENAME}.${EXTENSION}"
+    else
+      exit 0;
+    fi
 
-  if [[ $? == 0 ]] ; then
-  xdg-open "${MUSICDIR}${AUDIOFILENAME}.mp3"
   else
-    exit 0;
+    if [[ $? == 0 ]];then
+      xdg-open "${FILEBROWSER}"
+    else
+      exit 0;
+    fi
+
   fi
 
 
@@ -107,31 +160,56 @@ open()
 #move the mp3 file to the users music directory
 move()
 {
-  if [ -d ${MUSICDIR} ];then
-    mv -v "${CONVERTED}/${AUDIOFILENAME}.mp3" ${MUSICDIR}
-  elif [ ! -d ${MUSICDIR} ];then
-    mkdir ${MUSICDIR}
-    mv -v "${CONVERTED}/${AUDIOFILENAME}.mp3" ${MUSICDIR}
+  if [ "${USE_FILE_BROWSER}" = "no" ];then
+    if [ -d "${MUSICDIR}" ];then
+      mv -v "${CONVERTED}/${AUDIOFILENAME}.${EXTENSION}" "${MUSICDIR}"
+    elif [ ! -d "${MUSICDIR}" ];then
+      mkdir "${MUSICDIR}"
+      mv -v "${CONVERTED}/${AUDIOFILENAME}.${EXTENSION}" "${MUSICDIR}"
   
+    fi
+    
+
   fi
-
-
 }
 
 checkFile()
 {
 
   #check if mp3 file exists
-  if [ -f "${MUSICDIR}${AUDIOFILENAME}.mp3" ];then
-    notify-send "${AUDIOFILENAME}.mp3 was saved in ${MUSICDIR}"
-    ${SET_GUI_BIN} --question \
-    --title="Hey!" \
-    --text="I moved $AUDIOFILENAME.mp3 to $MUSICDIR, do you want to play it now?"
+  if [ "${USE_FILE_BROWSER}" = "no" ];then
+    if [ -f "${MUSICDIR}${AUDIOFILENAME}.${EXTENSION}" ];then
+      notify-send "${AUDIOFILENAME}.${EXTENSION} was saved in ${MUSICDIR}"
+      ${SET_GUI_BIN} --question \
+      --title="Hey!" \
+      --text="I moved $AUDIOFILENAME.${EXTENSION} to $MUSICDIR, do you want to play it now?"
+      if [[ $? != 0 ]];then
+        exit 0;
+      fi
 
-  elif [ ! -f "${MUSICDIR}${AUDIOFILENAME}.mp3" ];then
-    ${SET_GUI_BIN} --error \
-  --text "The mp3 file was does not exist. Either the download failed or the video was not converted to mp3 properly"
+    elif [ ! -f "${MUSICDIR}${AUDIOFILENAME}.${EXTENSION}" ];then
+      ${SET_GUI_BIN} --error \
+      --text "The mp3 file was does not exist. Either the download failed or the video was not converted to mp3 properly"
+    fi
+
+  else
+    if [ -f "${FILEBROWSER}.${EXTENSION}" ];then
+      notify-send "${FILEBROWSER}.${EXTENSION} was saved"
+      ${SET_GUI_BIN} --question \
+      --title="Hey!" \
+      --text="${FILEBROWSER}.${EXTENSION} was saved, do you want to play it now?"
+      if [[ $? == 0 ]];then
+        open
+      else
+        exit 0;
+      fi
+
+    elif [ ! -f "${FILEBROWSER}.${EXTENSION}" ];then
+      ${SET_GUI_BIN} --error \
+      --text "The converted file does not exist. Either the download failed or the video was not converted properly"
+    fi
   fi
+
 
 }
 
@@ -140,15 +218,19 @@ dconvert()
 {
 
   #call backend function and pass video URL and input of mp3 file
-  backend "${VIDURL}" "${AUDIOFILENAME}.mp3"
+  if [ "${USE_FILE_BROWSER}" = "no" ];then
+    backend "${VIDURL}" "${AUDIOFILENAME}.${EXTENSION}"
+    move
+    checkFile
+    open
+    
 
-  #call the move function to send mp3 files to MUSICDIR
-  move
-
-  #check if mp3 file is in MUSICDIR before prompting to play
-  checkFile
+  else
+    backend "${VIDURL}" "${FILEBROWSER}.${EXTENSION}"
+    checkFile
+  fi
 
 
  
-  open
+  
 }
