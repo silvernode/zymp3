@@ -3,7 +3,7 @@
 source config/zymp3.conf
 
 if [[ $EUID -ne 0 ]]; then
-   echo "$0 : This script must be run as root" 
+   echo "$0 : This script must be run as root"
    exit 1
 fi
 
@@ -19,7 +19,7 @@ checkYoutubedl(){
 
 
 checkFfmpeg(){
-  if [ ! -f /usr/bin/ffmpeg ];then
+  if [ ! -f /usr/bin/ffmpeg ] && [ ! -f /usr/bin/avconv ];then
     false
   else
     true
@@ -99,7 +99,7 @@ else
   ZSTATUS=1
   echo -e "is zenity installed?: \e[32m yes \033[0m (Required)"
 fi
-  
+
 checkYad
 if [ $? -eq "1" ];then
   YASTATUS=0
@@ -151,7 +151,7 @@ fi
 
 #add all exit status variables and check the sum
 #if a certain number is not reached, the check fails
-#if the check succeeds, files are installed 
+#if the check succeeds, files are installed
 ALLSTATUS=$(expr ${YSTATUS} + ${FSTATUS} + ${ZSTATUS} + ${XSTATUS} + ${ISTATUS})
 
 if [ ${ALLSTATUS} != 5 ];then
@@ -172,11 +172,11 @@ else
     cp -v assets/zymp3.png ${IMGDIR}
     cp -v assets/zymp3.desktop ${DESKTOPFILEDIR}
     echo '#!/bin/bash' > ${INSTALLPATH}/zymp3-run.sh
-    echo "cd ${INSTALLPATH}" >> ${INSTALLPATH}/zymp3-run.sh 
+    echo "cd ${INSTALLPATH}" >> ${INSTALLPATH}/zymp3-run.sh
     echo "./zymp3" >> ${INSTALLPATH}/zymp3-run.sh
     chmod -R 777 /opt/zymp3
     mv ${INSTALLPATH}/zymp3-run.sh /usr/bin/zymp3
-    
+
     if [ ! -d ${INSTALLPATH} ];then
       echo "Zymp3 not installed successfully"
       echo "Please file a bug report at: https://github.com/silvernode/zymp3/issues"
@@ -189,8 +189,5 @@ else
     echo "Installation cancelled..."
     exit 0;
   fi
-  
+
 fi
-
-
-
