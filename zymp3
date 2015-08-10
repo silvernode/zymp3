@@ -14,7 +14,7 @@
 
 
 
-#check for config file
+#CHECK FOR CONFIG FILE
 chk_conf(){
 if [ -f config/zymp3.conf ];then
   source config/zymp3.conf
@@ -28,6 +28,7 @@ else
 fi
 }
 
+#CHECK FOR FUNCTIONS SCRIPT
 chk_libs(){
 if [ -f lib/logic.sh ];then
   source lib/logic.sh
@@ -42,7 +43,7 @@ fi
 }
 
 
-#call the main gui
+#RUN CHECKS AND OPEN THE MAIN WINDOW
 main(){
   while true;do
     chk_conf

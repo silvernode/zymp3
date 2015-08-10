@@ -2,6 +2,7 @@
 
 source config/zymp3.conf
 
+#CHECK FOR YAD OR ZENITY AND DEFAULT TO ONE
 if [ ! -f /usr/bin/yad ];then
   SET_GUI_BIN="zenity"
 elif [ ! -f /usr/bin/zenity ];then
@@ -15,7 +16,8 @@ if [ ! -f /usr/bin/ffmpeg ];then
 else
   SET_CONV_TOOL="ffmpeg"
 fi
-#convert youtube videos to mp3 with zenity progess bar
+
+#PROGRESS BAR
 backend()
 {
 
@@ -71,7 +73,7 @@ backend()
 }
 
 
-#first zenity gui window (paste youtube link)
+#PASTE YOUTUBE LINK - WINDOW
 gui()
 {
   VIDURL=$(${SET_GUI_BIN} --title="Zymp3 0.1.7" \
@@ -98,7 +100,10 @@ gui()
 
 }
 
-#second gui window to name your mp3 file
+
+
+#ENTER MP3 FILE NAME OR OPEN FILEBROWSER
+#CAN BE SWITCHED IN CONFIG
 
 gui2()
 {
@@ -133,7 +138,8 @@ gui2()
 
 
 
-#notify the user that the mp3 file has been moved to their music folder
+#CHECK IF FILEBROWSER VAR IS SET
+#IF NOT SET, DEFAULT TO MANUAL TO {MUSICDIR}
 open()
 {
 
@@ -156,8 +162,8 @@ open()
 
 }
 
-#Check if MUSICDIR exists and create the directory if not
-#move the mp3 file to the users music directory
+#MOVE MP3 FILE TO MUSICDIR
+#IF MUSICDIR DOES NOT EXIST, CREATE IT
 move()
 {
   if [ "${USE_FILE_BROWSER}" = "no" ];then
@@ -173,10 +179,11 @@ move()
   fi
 }
 
+
+#CHECK IF MP3 FILE EXISTS
 checkFile()
 {
 
-  #check if mp3 file exists
   if [ "${USE_FILE_BROWSER}" = "no" ];then
     if [ -f "${MUSICDIR}${AUDIOFILENAME}.${EXTENSION}" ];then
       notify-send "${AUDIOFILENAME}.${EXTENSION} was saved in ${MUSICDIR}"
@@ -217,7 +224,7 @@ checkFile()
 dconvert()
 {
 
-  #call backend function and pass video URL and input of mp3 file
+  #PASS VIDEO URL AND FILENAME.MP3 TO BACKEND FUNCTION
   if [ "${USE_FILE_BROWSER}" = "no" ];then
     backend "${VIDURL}" "${AUDIOFILENAME}.${EXTENSION}"
     move
