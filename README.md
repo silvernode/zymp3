@@ -1,5 +1,6 @@
-
 ## Zymp3
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsilvernode%2Fzymp3.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsilvernode%2Fzymp3?ref=badge_shield)
+
 ### A frontend for youtube-dl and ffmpeg/avconv
 
 
@@ -142,3 +143,7 @@ FILENAME_BOX_WIDTH="326"
 ```  
 -----------------
 Please submit any issues you find, thanks
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsilvernode%2Fzymp3.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsilvernode%2Fzymp3?ref=badge_large)
