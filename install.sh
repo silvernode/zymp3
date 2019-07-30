@@ -10,7 +10,7 @@ fi
 #List of cuntions to check dependencies (will re-work this later)
 checkYoutubedl(){
 
-  if [ ! -f /usr/bin/youtube-dl ];then
+  if [ ! -f /usr/bin/youtube-dl ] && [ ! -f /usr/local/bin/youtube-dl ];then
     false
   else
     true
