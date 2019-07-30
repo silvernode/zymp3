@@ -1,9 +1,10 @@
 #!/bin/bash
 
 source config/zymp3.conf
+source lib/colors.sh
 
 if [[ $EUID -ne 0 ]]; then
-   echo "$0 : This script must be run as root"
+   echo -e "$0 : ${LRED}This script must be run as root${NC}\n"
    exit 1
 fi
 
@@ -76,66 +77,66 @@ echo "Checking dependencies...";echo
 checkYoutubedl
 if [ $? -eq "1" ];then
   YSTATUS=0
-  echo -e "is youtube-dl installed?: \e[31m no \033[0m (Required)"
+  echo -e "is youtube-dl installed?: ${LRED}no${NC} (Required)"
 else
   YSTATUS=1
-  echo -e "is youtube-dl installed?: \e[32m yes \033[0m (Required)"
+  echo -e "is youtube-dl installed?: ${LGREEN}yes${NC} (Required)"
 fi
 
 checkFfmpeg
 if [ $? -eq "1" ];then
   FSTATUS=0
-  echo -e "is ffmpeg installed?: \e[31m no \033[0m (Required)"
+  echo -e "is ffmpeg installed?: ${LRED}no${NC} (Required)"
 else
   FSTATUS=1
-  echo -e "is ffmpeg installed?: \e[32m yes \033[0m (Required)"
+  echo -e "is ffmpeg installed?: ${LGREEN}yes${NC} (Required)"
 fi
 
 checkZenity
 if [ $? -eq "1" ];then
   ZSTATUS=0
-  echo -e "is zenity installed?: \e[31m no \033[0m (Required)"
+  echo -e "is zenity installed?: ${LRED}no${NC} (Required)"
 else
   ZSTATUS=1
-  echo -e "is zenity installed?: \e[32m yes \033[0m (Required)"
+  echo -e "is zenity installed?: ${LGREEN}yes${NC} (Required)"
 fi
 
 checkYad
 if [ $? -eq "1" ];then
   YASTATUS=0
-  echo -e "is yad installed?: \e[31m no \033[0m (Optional)"
+  echo -e "is yad installed?: ${LRED}no${NC} (Optional)"
 else
   YASTATUS=1
-  echo -e "is yad installed?: \e[32m yes \033[0m (Optional)"
+  echo -e "is yad installed?: ${LGREEN}yes${NC} (Optional)"
 fi
 
 checkXdg
 if [ $? -eq "1" ];then
   XSTATUS=0
-  echo -e "is xdg-utils installed?: \e[31m no \033[0m (Required)"
+  echo -e "is xdg-utils installed?: ${LRED}no${NC} (Required)"
 else
   XSTATUS=1
-  echo -e "is xdg-utils installed?: \e[32m yes \033[0m (Required)"
+  echo -e "is xdg-utils installed?: ${LGREEN}yes${NC} (Required)"
 fi
 
 
 checkNotify
 if [ $? -eq "1" ];then
   NSTATUS=0
-  echo -e "is libnotify installed?: \e[31m no \033[0m (Optional)"
+  echo -e "is libnotify installed?: ${LRED}no${NC} (Optional)"
 else
   NSTATUS=1
-  echo -e "is libnotify installed?: \e[32m yes \033[0m (Optional)"
+  echo -e "is libnotify installed?: ${LGREEN}yes${NC} (Optional)"
 fi
 
 
 checkInstall
 if [ $? -eq "1" ];then
   ISTATUS=0
-  echo -e "does ${INSTALLPATH} exist?: \e[31m no \033[0m"
+  echo -e "does ${INSTALLPATH} exist?: ${LRED}no${NC}"
 else
   ISTATUS=1
-  echo -e "does ${INSTALLPATH} exist?: \e[32m yes \033[0m"
+  echo -e "does ${INSTALLPATH} exist?: ${LGREEN}yes${NC}"
 fi
 
 if [ ${ISTATUS} = 0 ];then
