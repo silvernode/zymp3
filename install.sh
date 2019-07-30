@@ -142,7 +142,7 @@ if [ ${ISTATUS} = 0 ];then
   echo -n "${INSTALLPATH} does not exist, do you want to create it?[y/n]: "
   read answer
   if [ ${answer} = "y" ];then
-    mkdir -v ${INSTALLPATH}
+    mkdir -vp ${INSTALLPATH}
     ISTATUS=1
   else
     echo "$0 : ERROR: could not create ${INSTALLPATH}"
